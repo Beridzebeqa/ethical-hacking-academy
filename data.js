@@ -190,13 +190,20 @@ const DataStore = {
     };
     users.push(user);
     this.saveUsers(users);
-
-    // student counter
-    const key = STORAGE.STUDENTS;
-    const current = parseInt(localStorage.getItem(key) || '850', 10);
-    localStorage.setItem(key, String((Number.isFinite(current) ? current : 850) + 1));
-
+    // სტუდენტების რაოდენობა = რეალური სტუდენტების რაოდენობა (ადმინი არ ითვლება)
+    this.syncStudentCount();
     return { ok: true, user };
+  },
+
+  /** რეალური სტუდენტების რაოდენობა (role === student) */
+  countStudents() {
+    return this.getUsers().filter((u) => u.role === 'student').length;
+  },
+
+  syncStudentCount() {
+    const n = this.countStudents();
+    localStorage.setItem(STORAGE.STUDENTS, String(n));
+    return n;
   },
 
   login(email, password) {
@@ -238,6 +245,7 @@ const DataStore = {
   deleteUser(id) {
     const users = this.getUsers().filter((u) => u.id !== id && u.role !== 'admin');
     this.saveUsers(users);
+    this.syncStudentCount();
   },
 
   // ----- Purchases -----

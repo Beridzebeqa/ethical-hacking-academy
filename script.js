@@ -34,18 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
     el.hidden = true;
   }
 
-  // ---------- Student counter (localStorage) ----------
-  const STUDENT_KEY = 'eh_academy_students';
-  const DEFAULT_STUDENTS = 850;
-
+  // ---------- Student counter (რეალური რეგისტრაციები) ----------
   function getStudentCount() {
-    const stored = localStorage.getItem(STUDENT_KEY);
-    const n = stored !== null ? parseInt(stored, 10) : DEFAULT_STUDENTS;
-    return Number.isFinite(n) && n >= 0 ? n : DEFAULT_STUDENTS;
-  }
-
-  function setStudentCount(count) {
-    localStorage.setItem(STUDENT_KEY, String(count));
+    if (typeof DataStore !== 'undefined' && DataStore.countStudents) {
+      return DataStore.countStudents();
+    }
+    const stored = localStorage.getItem('eh_academy_students');
+    const n = stored !== null ? parseInt(stored, 10) : 0;
+    return Number.isFinite(n) && n >= 0 ? n : 0;
   }
 
   function updateStudentDisplay(count, animate = false) {
@@ -64,13 +60,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function incrementStudentCount() {
-    const next = getStudentCount() + 1;
-    setStudentCount(next);
+    const next =
+      typeof DataStore !== 'undefined' && DataStore.syncStudentCount
+        ? DataStore.syncStudentCount()
+        : getStudentCount();
     updateStudentDisplay(next, true);
     return next;
   }
 
-  // Init display before animation
+  // სინქრონიზაცია რეალურ სტუდენტებთან
+  if (typeof DataStore !== 'undefined' && DataStore.syncStudentCount) {
+    DataStore.syncStudentCount();
+  }
+  // ძველი 850-ის გასუფთავება localStorage-დან თუ სტუდენტი არ არის
+  if (getStudentCount() === 0) {
+    localStorage.setItem('eh_academy_students', '0');
+  }
   updateStudentDisplay(getStudentCount());
 
   // ---------- Counter animation ----------
@@ -86,10 +91,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     countersAnimated = true;
 
-    $$('.stat-number').forEach((counter) => {
+    $$('.stat-number').forEach((counter, idx) => {
       let target;
       if (counter.id === 'studentCount') {
         target = getStudentCount();
+        counter.dataset.count = String(target);
+      } else if (idx === 1 && typeof DataStore !== 'undefined') {
+        // კურსების რაოდენობა — მხოლოდ აქტიური
+        target = DataStore.getCourses().filter((c) => c.active !== false).length;
         counter.dataset.count = String(target);
       } else {
         target = parseInt(counter.dataset.count, 10) || 0;
@@ -203,10 +212,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ---------- Course filter ----------
-  const filterBtns = $$('.filter-btn');
-  const courseCards = $$('.course-card');
+  // ---------- Courses: DataStore-დან + ფილტრი ----------
+  function renderHomeCourses() {
+    const grid = $('#coursesGrid');
+    if (!grid || typeof DataStore === 'undefined') return;
 
+    const courses = DataStore.getCourses().filter((c) => c.active !== false);
+    if (courses.length === 0) {
+      grid.innerHTML =
+        '<p class="text-muted" style="grid-column:1/-1;text-align:center;padding:40px 0">ამჟამად კურსები არ არის ხელმისაწვდომი.</p>';
+    } else {
+      grid.innerHTML = courses
+        .map(
+          (c) => `
+      <article class="course-card" data-level="${c.level}" data-course="${c.id}">
+        <div class="course-image">
+          <div class="course-level ${c.level}">${c.levelKa || c.level}</div>
+          <div class="course-icon" aria-hidden="true">${c.icon || '📘'}</div>
+        </div>
+        <div class="course-content">
+          <h3 class="course-title">${c.title}</h3>
+          <p class="course-desc">${c.short || c.desc || ''}</p>
+          <div class="course-meta">
+            <span>⏱️ ${c.hours} საათი</span>
+            <span>📚 ${c.modules} მოდული</span>
+          </div>
+          <div class="course-footer">
+            <span class="course-price">${c.price} ₾</span>
+            <a href="course.html?id=${encodeURIComponent(c.id)}" class="btn btn-sm btn-primary">დეტალები</a>
+          </div>
+        </div>
+      </article>`
+        )
+        .join('');
+    }
+
+    // კურსების რაოდენობა სტატისტიკაში
+    const stats = $$('.hero-stats .stat-number');
+    if (stats[1]) {
+      stats[1].dataset.count = String(courses.length);
+      // თუ ანიმაცია უკვე დასრულდა, პირდაპირ ვაჩვენოთ
+      if (stats[1].textContent !== '0' || document.body.dataset.countersDone === '1') {
+        stats[1].textContent = String(courses.length);
+      }
+    }
+
+    // კონტაქტის select
+    const select = $('#contactCourse');
+    if (select) {
+      const current = select.value;
+      select.innerHTML =
+        '<option value="">აირჩიე კურსი</option>' +
+        courses.map((c) => `<option value="${c.id}">${c.title}</option>`).join('');
+      if (current) select.value = current;
+    }
+  }
+
+  renderHomeCourses();
+
+  const filterBtns = $$('.filter-btn');
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       filterBtns.forEach((b) => {
@@ -217,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.setAttribute('aria-pressed', 'true');
 
       const filter = btn.dataset.filter;
-      courseCards.forEach((card) => {
+      $$('.course-card').forEach((card) => {
         const match = filter === 'all' || card.dataset.level === filter;
         card.classList.toggle('hidden', !match);
       });
