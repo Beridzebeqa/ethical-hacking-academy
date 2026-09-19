@@ -1,8 +1,7 @@
 const StripePayment = {
-  // შენი Render backend-ის მისამართი
   SERVER_URL: 'https://ethical-hacking-academy-1.onrender.com',
 
-  async startPayment(courseData) {
+  async startPayment(data) {
     try {
       const response = await fetch(`${this.SERVER_URL}/create-checkout-session`, {
         method: 'POST',
@@ -10,24 +9,24 @@ const StripePayment = {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          courseId: courseData.id,
-          courseTitle: courseData.title,
-          amount: courseData.price,
-          userId: courseData.userId || 'guest',
-          userEmail: courseData.userEmail || '',
+          // Backend ელოდება ზუსტად ამ დასახელების ველებს:
+          courseId: data.courseId || data.id,
+          courseTitle: data.courseTitle || data.title,
+          amount: data.amount || data.price,
+          userId: data.userId || 'guest',
+          userEmail: data.userEmail || '',
         }),
       });
 
-      const data = await response.json();
+      const result = await response.json();
 
-      if (data.ok && data.url) {
-        // გადამისამართება Stripe-ის Checkout გვერდზე
-        window.location.href = data.url;
+      if (result.ok && result.url) {
+        window.location.href = result.url;
       } else {
-        alert('შეცდომა: ' + (data.error || 'გადახდის ინიციალიზაცია ვერ მოხერხდა'));
+        alert('შეცდომა: ' + (result.error || 'გადახდის ინიციალიზაცია ვერ მოხერხდა'));
       }
     } catch (err) {
-      console.error('Payment error:', err);
+      console.error('Payment Error:', err);
       alert('სერვერთან კავშირის შეცდომა');
     }
   }
