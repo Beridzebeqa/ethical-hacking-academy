@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ეთიკური ჰაკინგის ქართული აკადემია — ისწავლე Penetration Testing, Bug Bounty, Red Team და Cybersecurity პროფესიონალურად ქართულად.">
+  <meta name="theme-color" content="#0a0f1a">
+  <meta name="keywords" content="ეთიკური ჰაკინგი, penetration testing, bug bounty, cybersecurity, კიბერუსაფრთხოება, საქართველო">
+  <title>ეთიკური ჰაკინგის ქართული აკადემია | EthicalHack.ge</title>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#home" class="skip-link">გადასვლა შიგთავსზე</a>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar" aria-label="მთავარი ნავიგაცია">
+    <div class="container nav-container">
+      <a href="#home" class="logo" aria-label="EthicalHack.ge მთავარი">
+        <span class="logo-icon" aria-hidden="true">EH</span>
+        <span class="logo-text">Ethical<span>Hack</span>.ge</span>
+      </a>
+
+      <div class="nav-menu" id="navMenu">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home" class="nav-link">მთავარი</a></li>
+          <li><a href="#courses" class="nav-link">კურსები</a></li>
+          <li><a href="#about" class="nav-link">ჩვენს შესახებ</a></li>
+          <li><a href="#features" class="nav-link">რატომ ჩვენ</a></li>
+          <li><a href="#pricing" class="nav-link">ფასები</a></li>
+          <li><a href="#contact" class="nav-link">კონტაქტი</a></li>
+        </ul>
+        <div class="nav-actions" id="navActions">
+          <button type="button" class="btn btn-outline" id="loginBtn">შესვლა</button>
+          <button type="button" class="btn btn-primary" id="registerBtn">რეგისტრაცია</button>
+        </div>
+      </div>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="მენიუს გახსნა" aria-expanded="false" aria-controls="navMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-content">
+      <div class="hero-badge">🇬🇪 ქართული აკადემია</div>
+      <h1 class="hero-title">
+        ისწავლე <span class="text-primary">ეთიკური ჰაკინგი</span><br>
+        პროფესიონალურად
+      </h1>
+      <p class="hero-subtitle">
+        სრული კურსები Penetration Testing-ში, Bug Bounty-ში, Red Team-ში და Cybersecurity-ში.
+        პრაქტიკული ლაბორატორიები, რეალური სცენარები და სერტიფიკატები.
+      </p>
+      <div class="hero-buttons">
+        <a href="#courses" class="btn btn-primary btn-lg">კურსების ნახვა</a>
+        <a href="#about" class="btn btn-outline btn-lg">გაიგე მეტი</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number" id="studentCount" data-count="850">0</span>+
+          <span class="stat-label">სტუდენტი</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" data-count="12">0</span>
+          <span class="stat-label">კურსი</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" data-count="98">0</span>%
+          <span class="stat-label">კმაყოფილება</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses -->
+  <section class="section" id="courses">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">კურსები</span>
+        <h2 class="section-title">აირჩიე შენი გზა</h2>
+        <p class="section-subtitle">ყველა კურსი პრაქტიკაზეა ორიენტირებული და მოიცავს რეალურ ლაბორატორიებს</p>
+      </div>
+
+      <div class="courses-filter" role="group" aria-label="კურსების ფილტრი">
+        <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">ყველა</button>
+        <button type="button" class="filter-btn" data-filter="beginner" aria-pressed="false">დამწყები</button>
+        <button type="button" class="filter-btn" data-filter="intermediate" aria-pressed="false">საშუალო</button>
+        <button type="button" class="filter-btn" data-filter="advanced" aria-pressed="false">მოწინავე</button>
+      </div>
+
+      <div class="courses-grid" id="coursesGrid">
+        <article class="course-card" data-level="beginner" data-course="basics">
+          <div class="course-image">
+            <div class="course-level beginner">დამწყები</div>
+            <div class="course-icon" aria-hidden="true">🔓</div>
+          </div>
+          <div class="course-content">
+            <h3 class="course-title">ეთიკური ჰაკინგის საფუძვლები</h3>
+            <p class="course-desc">შეისწავლე ჰაკინგის საფუძვლები, ქსელის უსაფრთხოება, Linux და ძირითადი ხელსაწყოები.</p>
+            <div class="course-meta">
+              <span>⏱️ 40 საათი</span>
+              <span>📚 8 მოდული</span>
+            </div>
+            <div class="course-footer">
+              <span class="course-price">299 ₾</span>
+              <a href="course.html?id=basics" class="btn btn-sm btn-primary">დეტალები</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card" data-level="intermediate" data-course="pentest">
+          <div class="course-image">
+            <div class="course-level intermediate">საშუალო</div>
+            <div class="course-icon" aria-hidden="true">🎯</div>
+          </div>
+          <div class="course-content">
+            <h3 class="course-title">Penetration Testing</h3>
+            <p class="course-desc">სრული პენტესტინგის კურსი: რეკონა, ექსპლოიტაცია, პოსტ-ექსპლოიტაცია და რეპორტინგი.</p>
+            <div class="course-meta">
+              <span>⏱️ 60 საათი</span>
+              <span>📚 12 მოდული</span>
+            </div>
+            <div class="course-footer">
+              <span class="course-price">499 ₾</span>
+              <a href="course.html?id=pentest" class="btn btn-sm btn-primary">დეტალები</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card" data-level="intermediate" data-course="bugbounty">
+          <div class="course-image">
+            <div class="course-level intermediate">საშუალო</div>
+            <div class="course-icon" aria-hidden="true">💰</div>
+          </div>
+          <div class="course-content">
+            <h3 class="course-title">Bug Bounty Hunter</h3>
+            <p class="course-desc">ისწავლე ვებ აპლიკაციების უსაფრთხოება და დაიწყე ფულის შოვნა Bug Bounty პროგრამებში.</p>
+            <div class="course-meta">
+              <span>⏱️ 50 საათი</span>
+              <span>📚 10 მოდული</span>
+            </div>
+            <div class="course-footer">
+              <span class="course-price">449 ₾</span>
+              <a href="course.html?id=bugbounty" class="btn btn-sm btn-primary">დეტალები</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card" data-level="advanced" data-course="redteam">
+          <div class="course-image">
+            <div class="course-level advanced">მოწინავე</div>
+            <div class="course-icon" aria-hidden="true">🔴</div>
+          </div>
+          <div class="course-content">
+            <h3 class="course-title">Red Team Operations</h3>
+            <p class="course-desc">მოწინავე თავდასხმის ტექნიკები, ადაპტური თრეთინგი და რეალური Red Team სცენარები.</p>
+            <div class="course-meta">
+              <span>⏱️ 80 საათი</span>
+              <span>📚 15 მოდული</span>
+            </div>
+            <div class="course-footer">
+              <span class="course-price">799 ₾</span>
+              <a href="course.html?id=redteam" class="btn btn-sm btn-primary">დეტალები</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card" data-level="beginner" data-course="linux">
+          <div class="course-image">
+            <div class="course-level beginner">დამწყები</div>
+            <div class="course-icon" aria-hidden="true">🐧</div>
+          </div>
+          <div class="course-content">
+            <h3 class="course-title">Linux for Hackers</h3>
+            <p class="course-desc">Linux-ის სიღრმისეული შესწავლა ჰაკერებისთვის: ბრძანებები, სკრიპტები, ქსელი და უსაფრთხოება.</p>
+            <div class="course-meta">
+              <span>⏱️ 30 საათი</span>
+              <span>📚 6 მოდული</span>
+            </div>
+            <div class="course-footer">
+              <span class="course-price">199 ₾</span>
+              <a href="course.html?id=linux" class="btn btn-sm btn-primary">დეტალები</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card" data-level="advanced" data-course="cloud">
+          <div class="course-image">
+            <div class="course-level advanced">მოწინავე</div>
+            <div class="course-icon" aria-hidden="true">☁️</div>
+          </div>
+          <div class="course-content">
+            <h3 class="course-title">Cloud Security & Hacking</h3>
+            <p class="course-desc">AWS, Azure და GCP უსაფრთხოება. Cloud ინფრასტრუქტურის ტესტირება და დაცვა.</p>
+            <div class="course-meta">
+              <span>⏱️ 55 საათი</span>
+              <span>📚 11 მოდული</span>
+            </div>
+            <div class="course-footer">
+              <span class="course-price">649 ₾</span>
+              <a href="course.html?id=cloud" class="btn btn-sm btn-primary">დეტალები</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content">
+          <span class="section-badge">ჩვენს შესახებ</span>
+          <h2 class="section-title">რატომ ეთიკური ჰაკინგის აკადემია?</h2>
+          <p>
+            ჩვენ ვართ საქართველოს პირველი სპეციალიზებული აკადემია, რომელიც ფოკუსირებულია მხოლოდ ეთიკურ ჰაკინგზე და კიბერუსაფრთხოებაზე.
+            ჩვენი მიზანია მოვამზადოთ პროფესიონალი პენტესტერები და Bug Bounty ჰანტერები, რომლებიც შეძლებენ რეალურ სამყაროში მუშაობას.
+          </p>
+          <ul class="about-list">
+            <li><span class="check" aria-hidden="true">✓</span><span>პრაქტიკული ლაბორატორიები რეალურ გარემოში</span></li>
+            <li><span class="check" aria-hidden="true">✓</span><span>ინსტრუქტორები ინდუსტრიის გამოცდილებით</span></li>
+            <li><span class="check" aria-hidden="true">✓</span><span>სერტიფიკატები და კარიერული მხარდაჭერა</span></li>
+            <li><span class="check" aria-hidden="true">✓</span><span>საზოგადოება და მენტორობა</span></li>
+          </ul>
+        </div>
+        <div class="about-visual">
+          <div class="code-window" aria-hidden="true">
+            <div class="code-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="code-title">terminal</span>
+            </div>
+            <pre class="code-body"><code><span class="code-comment"># Ethical Hacking Academy</span>
+<span class="code-prompt">$</span> whoami
+<span class="code-output">ethical_hacker</span>
+
+<span class="code-prompt">$</span> cat mission.txt
+<span class="code-output">Defend. Test. Improve.
+Protect Georgian cyberspace.</span>
+
+<span class="code-prompt">$</span> ./start_learning.sh
+<span class="code-output">Loading courses...
+Ready. Let's hack ethically 🛡️</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">რატომ ჩვენ</span>
+        <h2 class="section-title">რა გვანიჭებს უპირატესობას</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🧪</div>
+          <h3>პრაქტიკული ლაბები</h3>
+          <p>ყოველი მოდული მოიცავს ინტერაქტიულ ლაბორატორიებს, სადაც რეალურად ატარებ თავდასხმებს უსაფრთხო გარემოში.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">👨‍🏫</div>
+          <h3>ექსპერტი ინსტრუქტორები</h3>
+          <p>ჩვენი მასწავლებლები არიან აქტიური პენტესტერები და Bug Bounty ჰანტერები რეალური გამოცდილებით.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">📜</div>
+          <h3>სერტიფიკატები</h3>
+          <p>კურსის დასრულების შემდეგ მიიღებ აღიარებულ სერტიფიკატს, რომელიც დაგეხმარება კარიერში.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">💬</div>
+          <h3>საზოგადოება</h3>
+          <p>შემოგვიერთდი Discord/Telegram ჯგუფებში, სადაც შეძლებ კითხვების დასმას და გამოცდილების გაზიარებას.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🚀</div>
+          <h3>კარიერული მხარდაჭერა</h3>
+          <p>დაგეხმარებით CV-ის შედგენაში, ინტერვიუს მომზადებაში და სამუშაოს პოვნაში.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🔄</div>
+          <h3>განახლებული კონტენტი</h3>
+          <p>კურსები რეგულარულად განახლდება უახლესი ტექნიკებით და ხელსაწყოებით.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section pricing-section" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">ფასები</span>
+        <h2 class="section-title">აირჩიე შენთვის შესაფერისი გეგმა</h2>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>სტარტერი</h3>
+            <div class="pricing-price">
+              <span class="amount">199</span>
+              <span class="currency">₾</span>
+            </div>
+            <p>ერთი კურსი</p>
+          </div>
+          <ul class="pricing-features">
+            <li>✓ 1 კურსის სრული წვდომა</li>
+            <li>✓ ლაბორატორიები</li>
+            <li>✓ სერტიფიკატი</li>
+            <li>✓ საზოგადოების წვდომა</li>
+            <li class="disabled">✗ მენტორობა</li>
+            <li class="disabled">✗ კარიერული მხარდაჭერა</li>
+          </ul>
+          <button type="button" class="btn btn-outline btn-block pricing-btn">არჩევა</button>
+        </div>
+
+        <div class="pricing-card popular">
+          <div class="popular-badge">პოპულარული</div>
+          <div class="pricing-header">
+            <h3>პროფესიონალი</h3>
+            <div class="pricing-price">
+              <span class="amount">799</span>
+              <span class="currency">₾</span>
+            </div>
+            <p>3 კურსი + ბონუსები</p>
+          </div>
+          <ul class="pricing-features">
+            <li>✓ 3 კურსის სრული წვდომა</li>
+            <li>✓ ყველა ლაბორატორია</li>
+            <li>✓ სერტიფიკატები</li>
+            <li>✓ საზოგადოების წვდომა</li>
+            <li>✓ მენტორობა (თვეში 2 სესია)</li>
+            <li>✓ კარიერული მხარდაჭერა</li>
+          </ul>
+          <button type="button" class="btn btn-primary btn-block pricing-btn">არჩევა</button>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>ულიმიტო</h3>
+            <div class="pricing-price">
+              <span class="amount">1499</span>
+              <span class="currency">₾</span>
+            </div>
+            <p>ყველა კურსი + VIP</p>
+          </div>
+          <ul class="pricing-features">
+            <li>✓ ყველა კურსის წვდომა</li>
+            <li>✓ პრიორიტეტული მხარდაჭერა</li>
+            <li>✓ ყველა სერტიფიკატი</li>
+            <li>✓ VIP საზოგადოება</li>
+            <li>✓ ყოველკვირეული მენტორობა</li>
+            <li>✓ სამუშაოს გარანტია*</li>
+          </ul>
+          <button type="button" class="btn btn-outline btn-block pricing-btn">არჩევა</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section cta-section" id="contact">
+    <div class="container">
+      <div class="cta-box">
+        <h2>მზად ხარ დაიწყო?</h2>
+        <p>დარეგისტრირდი ახლავე და მიიღე 10% ფასდაკლება პირველ კურსზე</p>
+        <form class="cta-form" id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contactName" class="sr-only">სახელი და გვარი</label>
+              <input type="text" id="contactName" name="name" placeholder="სახელი და გვარი" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="contactEmail" class="sr-only">ელ-ფოსტა</label>
+              <input type="email" id="contactEmail" name="email" placeholder="ელ-ფოსტა" required autocomplete="email">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contactCourse" class="sr-only">აირჩიე კურსი</label>
+              <select id="contactCourse" name="course" required>
+                <option value="">აირჩიე კურსი</option>
+                <option value="basics">ეთიკური ჰაკინგის საფუძვლები</option>
+                <option value="pentest">Penetration Testing</option>
+                <option value="bugbounty">Bug Bounty Hunter</option>
+                <option value="redteam">Red Team Operations</option>
+                <option value="linux">Linux for Hackers</option>
+                <option value="cloud">Cloud Security</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" id="contactSubmit">გაგზავნა</button>
+          </div>
+          <p class="form-error" id="contactError" hidden></p>
+        </form>
+        <p class="form-note">ან მოგვწერე: <a href="mailto:info@ethicalhack.ge">info@ethicalhack.ge</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="logo">
+            <span class="logo-icon" aria-hidden="true">EH</span>
+            <span class="logo-text">Ethical<span>Hack</span>.ge</span>
+          </a>
+          <p>საქართველოს პირველი ეთიკური ჰაკინგის აკადემია. ვასწავლით უსაფრთხოდ, ეთიკურად და პროფესიონალურად.</p>
+        </div>
+        <div class="footer-links">
+          <h4>ნავიგაცია</h4>
+          <ul>
+            <li><a href="#home">მთავარი</a></li>
+            <li><a href="#courses">კურსები</a></li>
+            <li><a href="#about">ჩვენს შესახებ</a></li>
+            <li><a href="#pricing">ფასები</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>კურსები</h4>
+          <ul>
+            <li><a href="#courses">საფუძვლები</a></li>
+            <li><a href="#courses">Penetration Testing</a></li>
+            <li><a href="#courses">Bug Bounty</a></li>
+            <li><a href="#courses">Red Team</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>კონტაქტი</h4>
+          <ul>
+            <li><a href="mailto:info@ethicalhack.ge">info@ethicalhack.ge</a></li>
+            <li><a href="https://t.me/" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+            <li><a href="https://discord.com/" target="_blank" rel="noopener noreferrer">Discord</a></li>
+            <li><a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 EthicalHack.ge — ყველა უფლება დაცულია.</p>
+        <p class="disclaimer">⚠️ ყველა მასალა მხოლოდ საგანმანათლებლო მიზნებისთვისაა. არალეგალური გამოყენება აკრძალულია.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth Modal -->
+  <div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal-content">
+      <button type="button" class="modal-close" id="modalClose" aria-label="დახურვა">&times;</button>
+      <div class="modal-tabs" role="tablist">
+        <button type="button" class="modal-tab active" role="tab" data-tab="login" aria-selected="true" id="tabLogin">შესვლა</button>
+        <button type="button" class="modal-tab" role="tab" data-tab="register" aria-selected="false" id="tabRegister">რეგისტრაცია</button>
+      </div>
+
+      <form class="auth-form" id="loginForm" novalidate>
+        <h3 id="modalTitle">შესვლა</h3>
+        <div class="form-group">
+          <label for="loginEmail" class="sr-only">ელ-ფოსტა</label>
+          <input type="email" id="loginEmail" placeholder="ელ-ფოსტა" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="loginPassword" class="sr-only">პაროლი</label>
+          <input type="password" id="loginPassword" placeholder="პაროლი" required autocomplete="current-password">
+        </div>
+        <p class="form-error" id="loginError" hidden></p>
+        <button type="submit" class="btn btn-primary btn-block">შესვლა</button>
+      </form>
+
+      <form class="auth-form hidden" id="registerForm" novalidate>
+        <h3>რეგისტრაცია</h3>
+        <div class="form-group">
+          <label for="regName" class="sr-only">სახელი</label>
+          <input type="text" id="regName" placeholder="სახელი" required autocomplete="name" minlength="2">
+        </div>
+        <div class="form-group">
+          <label for="regEmail" class="sr-only">ელ-ფოსტა</label>
+          <input type="email" id="regEmail" placeholder="ელ-ფოსტა" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="regPassword" class="sr-only">პაროლი</label>
+          <input type="password" id="regPassword" placeholder="პაროლი (მინ. 6 სიმბოლო)" required minlength="6" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label for="regPasswordConfirm" class="sr-only">გაიმეორე პაროლი</label>
+          <input type="password" id="regPasswordConfirm" placeholder="გაიმეორე პაროლი" required minlength="6" autocomplete="new-password">
+        </div>
+        <p class="form-error" id="passwordError" hidden></p>
+        <button type="submit" class="btn btn-primary btn-block" id="registerSubmit">რეგისტრაცია</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Course Detail Modal -->
+  <div class="modal" id="courseModal" role="dialog" aria-modal="true" aria-labelledby="courseModalTitle" hidden>
+    <div class="modal-content course-modal-content">
+      <button type="button" class="modal-close" id="courseModalClose" aria-label="დახურვა">&times;</button>
+      <div id="courseModalBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="bog-payment.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

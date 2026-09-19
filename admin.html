@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ადმინ პანელი | EthicalHack.ge</title>
+  <meta name="theme-color" content="#0a0f1a">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar scrolled">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">EH</span>
+        <span class="logo-text">Ethical<span>Hack</span>.ge</span>
+      </a>
+      <div class="nav-menu" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="dashboard.html" class="nav-link">დაშბორდი</a></li>
+          <li><a href="admin.html" class="nav-link active">ადმინი</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button type="button" class="btn btn-outline" id="logoutBtn">გასვლა</button>
+        </div>
+      </div>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="მენიუ"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <main class="page-main">
+    <div class="container">
+      <h1 class="admin-title">ადმინისტრატორის პანელი</h1>
+      <p class="text-muted admin-hint">დემო: შესვლა — <code>admin@ethicalhack.ge</code> / <code>admin123</code></p>
+
+      <div class="admin-tabs">
+        <button type="button" class="admin-tab active" data-panel="courses">კურსები</button>
+        <button type="button" class="admin-tab" data-panel="users">მომხმარებლები</button>
+        <button type="button" class="admin-tab" data-panel="purchases">გადახდები</button>
+      </div>
+
+      <!-- Courses panel -->
+      <section id="panel-courses" class="admin-panel">
+        <div class="admin-toolbar">
+          <h2>კურსების მართვა</h2>
+          <button type="button" class="btn btn-primary" id="addCourseBtn">+ ახალი კურსი</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="coursesTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>სათაური</th>
+                <th>დონე</th>
+                <th>ფასი</th>
+                <th>სტატუსი</th>
+                <th>მოქმედება</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Users panel -->
+      <section id="panel-users" class="admin-panel" hidden>
+        <h2>მომხმარებლები</h2>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="usersTable">
+            <thead>
+              <tr>
+                <th>სახელი</th>
+                <th>ელ-ფოსტა</th>
+                <th>როლი</th>
+                <th>რეგისტრაცია</th>
+                <th>მოქმედება</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Purchases panel -->
+      <section id="panel-purchases" class="admin-panel" hidden>
+        <h2>გადახდები</h2>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="purchasesTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>მომხმარებელი</th>
+                <th>კურსი</th>
+                <th>თანხა</th>
+                <th>სტატუსი</th>
+                <th>თარიღი</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Course form modal -->
+  <div class="modal" id="courseFormModal" hidden>
+    <div class="modal-content" style="max-width:520px">
+      <button type="button" class="modal-close" id="courseFormClose">&times;</button>
+      <h3 id="courseFormTitle">ახალი კურსი</h3>
+      <form id="courseForm" class="auth-form" style="margin-top:16px">
+        <input type="hidden" id="cfId">
+        <div class="form-group">
+          <input type="text" id="cfTitle" placeholder="სათაური" required>
+        </div>
+        <div class="form-group">
+          <input type="text" id="cfIdField" placeholder="ID (ლათინური, უნიკალური)" required pattern="[a-z0-9\-]+">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <select id="cfLevel" required>
+              <option value="beginner">დამწყები</option>
+              <option value="intermediate">საშუალო</option>
+              <option value="advanced">მოწინავე</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="number" id="cfPrice" placeholder="ფასი (₾)" required min="0" step="1">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <input type="number" id="cfHours" placeholder="საათები" required min="1">
+          </div>
+          <div class="form-group">
+            <input type="number" id="cfModules" placeholder="მოდულები" required min="1">
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" id="cfIcon" placeholder="იკონი (emoji)" value="📘">
+        </div>
+        <div class="form-group">
+          <textarea id="cfDesc" placeholder="აღწერა" rows="3" required style="width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit"></textarea>
+        </div>
+        <div class="form-group">
+          <input type="text" id="cfTopics" placeholder="თემები (მძიმით გამოყოფილი)">
+        </div>
+        <label class="admin-check">
+          <input type="checkbox" id="cfActive" checked> აქტიური
+        </label>
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top:16px">შენახვა</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="data.js"></script>
+  <script src="admin-page.js"></script>
+</body>
+</html>

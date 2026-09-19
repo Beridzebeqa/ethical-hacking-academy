@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>კურსი | EthicalHack.ge</title>
+  <meta name="theme-color" content="#0a0f1a">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">EH</span>
+        <span class="logo-text">Ethical<span>Hack</span>.ge</span>
+      </a>
+      <div class="nav-menu" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="index.html#courses" class="nav-link">კურსები</a></li>
+          <li><a href="dashboard.html" class="nav-link" id="navDashboard" hidden>ჩემი გვერდი</a></li>
+        </ul>
+        <div class="nav-actions" id="navActions">
+          <button type="button" class="btn btn-outline" id="loginBtn" hidden>შესვლა</button>
+          <a href="dashboard.html" class="btn btn-primary" id="dashBtn" hidden>დაშბორდი</a>
+        </div>
+      </div>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="მენიუ"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <main class="page-main" id="coursePage">
+    <div class="container">
+      <a href="index.html#courses" class="back-link">← ყველა კურსი</a>
+      <div id="courseContent" class="course-detail">
+        <p class="loading">იტვირთება...</p>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="bog-payment.js"></script>
+  <script src="course-page.js"></script>
+</body>
+</html>

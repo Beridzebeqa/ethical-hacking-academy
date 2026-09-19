@@ -1,0 +1,16 @@
+[
+  {
+    "id": "p-dc655e64",
+    "userId": "u-1789737941578",
+    "userEmail": "beridzebeqa969@gmail.com",
+    "courseId": "pentest",
+    "courseTitle": "Penetration Testing",
+    "amount": 499,
+    "status": "paid",
+    "bogOrderId": null,
+    "method": "bog_demo",
+    "createdAt": "2026-09-18T13:25:49.350Z",
+    "paidAt": "2026-09-18T13:27:46.484Z",
+    "updatedAt": "2026-09-18T13:27:46.484Z"
+  }
+]

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>გადახდა (დემო) | EthicalHack.ge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bog-demo-overlay" style="position:relative;min-height:100vh">
+    <div class="bog-demo-card">
+      <div class="bog-demo-header">
+        <div class="bog-logo">საქართველოს ბანკი</div>
+        <span class="bog-demo-badge">DEMO</span>
+      </div>
+      <h2>გადახდის გვერდი</h2>
+      <p class="bog-demo-desc">
+        ახლა ჩართულია <strong>დემო რეჟიმი</strong>. ნამდვილი ფული არ იხდება.
+        როცა BOG credentials ჩასვამ .env-ში და <code>BOG_DEMO_MODE=false</code>,
+        მომხმარებელი რეალურ BOG გვერდზე გადავა.
+      </p>
+      <div class="bog-demo-order">
+        <div><span>კურსი</span><strong id="dTitle">—</strong></div>
+        <div><span>თანხა</span><strong id="dAmount">—</strong></div>
+        <div><span>შეკვეთა</span><strong id="dPurchase">—</strong></div>
+      </div>
+      <div class="bog-demo-form">
+        <label>ბარათის ნომერი (დემო)</label>
+        <input type="text" value="4111 1111 1111 1111">
+        <div class="bog-demo-row">
+          <div>
+            <label>ვადა</label>
+            <input type="text" value="12/28">
+          </div>
+          <div>
+            <label>CVV</label>
+            <input type="text" value="123" >
+          </div>
+        </div>
+      </div>
+      <div class="bog-demo-actions">
+        <button type="button" class="btn btn-primary" id="btnOk">გადახდა წარმატებით</button>
+        <button type="button" class="btn btn-outline" id="btnFail">გაუქმება</button>
+      </div>
+    </div>
+  </div>
+  <script src="data.js"></script>
+  <script src="bog-payment.js"></script>
+  <script>
+    const p = new URLSearchParams(location.search);
+    const purchaseId = p.get('purchase');
+    const courseId = p.get('course');
+    const amount = p.get('amount');
+    const title = p.get('title') || courseId;
+
+    document.getElementById('dTitle').textContent = title;
+    document.getElementById('dAmount').textContent = amount + ' ₾';
+    document.getElementById('dPurchase').textContent = purchaseId || '—';
+
+    document.getElementById('btnOk').onclick = async () => {
+      const r = await BOGPayment.confirmAndGrantAccess(purchaseId, { demoSuccess: true });
+      if (r.ok) {
+        location.href = 'payment-success.html?purchase=' + encodeURIComponent(purchaseId) +
+          '&course=' + encodeURIComponent(courseId || '');
+      } else {
+        alert('დადასტურება ვერ მოხერხდა — სერვერი გაშვებულია?');
+      }
+    };
+
+    document.getElementById('btnFail').onclick = () => {
+      location.href = 'payment-fail.html?purchase=' + encodeURIComponent(purchaseId || '');
+    };
+  </script>
+</body>
+</html>

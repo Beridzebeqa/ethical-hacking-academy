@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>გადახდა წარმატებული | EthicalHack.ge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-main" style="min-height:100vh;display:flex;align-items:center">
+    <div class="container" style="text-align:center;max-width:480px">
+      <div style="font-size:4rem;margin-bottom:16px" id="icon">⏳</div>
+      <h1 id="title">მიმდინარეობს შემოწმება...</h1>
+      <p class="text-muted" id="msg" style="margin:16px 0 32px">გთხოვთ, დაელოდოთ</p>
+      <div id="actions" style="display:none;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="dashboard.html" class="btn btn-primary">ჩემი გვერდი</a>
+        <a id="courseLink" href="index.html#courses" class="btn btn-outline">კურსის გვერდი</a>
+      </div>
+    </div>
+  </main>
+  <script src="data.js"></script>
+  <script src="bog-payment.js"></script>
+  <script>
+    (async function () {
+      const p = new URLSearchParams(location.search);
+      const purchaseId = p.get('purchase');
+      const courseId = p.get('course');
+
+      if (courseId) {
+        document.getElementById('courseLink').href =
+          'course.html?id=' + encodeURIComponent(courseId);
+      }
+
+      if (!purchaseId) {
+        document.getElementById('icon').textContent = '✅';
+        document.getElementById('title').textContent = 'გადახდა მიღებულია';
+        document.getElementById('msg').textContent = 'კურსი ხელმისაწვდომია დაშბორდზე.';
+        document.getElementById('actions').style.display = 'flex';
+        return;
+      }
+
+      let result = await BOGPayment.confirmAndGrantAccess(purchaseId);
+
+      for (let i = 0; i < 5 && !result.ok; i++) {
+        await new Promise(function (r) { setTimeout(r, 1500); });
+        result = await BOGPayment.confirmAndGrantAccess(purchaseId);
+      }
+
+      if (result.ok && result.purchase && result.purchase.status === 'paid') {
+        document.getElementById('icon').textContent = '✅';
+        document.getElementById('title').textContent = 'გადახდა წარმატებით შესრულდა!';
+        document.getElementById('msg').textContent =
+          'კურსი დაემატა შენს ანგარიშს. შეგიძლია დაიწყო სწავლა.';
+      } else {
+        document.getElementById('icon').textContent = '⏳';
+        document.getElementById('title').textContent = 'გადახდა მუშავდება';
+        document.getElementById('msg').textContent =
+          'ბანკიდან დადასტურება ჯერ არ მოსულა. რამდენიმე წუთში შეამოწმე დაშბორდი.';
+      }
+      document.getElementById('actions').style.display = 'flex';
+    })();
+  </script>
+</body>
+</html>
