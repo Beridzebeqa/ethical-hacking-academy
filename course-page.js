@@ -35,9 +35,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   let owned = false;
   if (session) {
     owned = DataStore.hasPurchased(session.userId, course.id);
+    // Stripe access check (თუ Stripe-ში გაქვს access-ის შემოწმება)
     try {
-      if (typeof BOGPayment !== 'undefined') {
-        const serverOwned = await BOGPayment.hasAccess(session.userId, course.id);
+      if (typeof StripePayment !== 'undefined' && StripePayment.hasAccess) {
+        const serverOwned = await StripePayment.hasAccess(session.userId, course.id);
         if (serverOwned) owned = true;
       }
     } catch (e) {}
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           ${
             owned
               ? '<p class="owned-badge">✓ შეძენილი გაქვს</p><a href="dashboard.html" class="btn btn-primary btn-block">სწავლის გაგრძელება</a>'
-              : '<button type="button" class="btn btn-primary btn-block" id="buyBtn">შეძენა ბარათით (BOG)</button><p class="buy-note">უსაფრთხო გადახდა საქართველოს ბანკის მეშვეობით</p>'
+              : '<button type="button" class="btn btn-primary btn-block" id="buyBtn">შეძენა ბარათით (Stripe)</button><p class="buy-note">🔒 უსაფრთხო გადახდა Stripe-ის მეშვეობით</p>'
           }
           ${!session && !owned ? '<p class="buy-note">შეძენისთვის ჯერ <a href="index.html?login=1">შედი</a>.</p>' : ''}
         </div>
@@ -92,18 +93,29 @@ document.addEventListener('DOMContentLoaded', async () => {
       btn.disabled = true;
       btn.textContent = 'მიმდინარეობს...';
     }
-    const result = await BOGPayment.startPayment({
-      courseId: course.id,
-      courseTitle: course.title,
-      amount: course.price,
-      userId: sess.userId,
-      userEmail: sess.email,
-    });
-    if (!result.ok) {
-      showToast(result.error || 'შეცდომა');
+
+    try {
+      if (typeof StripePayment !== 'undefined') {
+        await StripePayment.startPayment({
+          courseId: course.id,
+          courseTitle: course.title,
+          amount: course.price,
+          userId: sess.userId,
+          userEmail: sess.email,
+        });
+      } else {
+        showToast('შეცდომა: Stripe-ის სკრიპტი ვერ მოიძებნა');
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'შეძენა ბარათით (Stripe)';
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('გადახდის ინიციალიზაცია ვერ მოხერხდა');
       if (btn) {
         btn.disabled = false;
-        btn.textContent = 'შეძენა ბარათით (BOG)';
+        btn.textContent = 'შეძენა ბარათით (Stripe)';
       }
     }
   });
